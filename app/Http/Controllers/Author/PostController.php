@@ -51,11 +51,17 @@ class PostController extends Controller
     {
         $this->validate($request,[
             'title' => 'required',
+            'image' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'description' => 'required',
-            'image' => 'required',
             'categories' => 'required',
             'tags' => 'required',
             'body' => 'required',
+        ],
+        [
+            'title.require'  => 'Tiêu đề không được để trống',
+            'image.mimes'  => 'Vui lòng chọn đúng định dạng ảnh (jpg,png,jpeg,gif,svg)',
+            'image.image'  => 'File tải lên không phải định dạng ảnh',
+            'image.max'  => 'Dung lượng ảnh không được quá 2Mb'
         ]);
         $image = $request->file('image');
         $slug = Str::slug($request->title);
@@ -153,13 +159,19 @@ class PostController extends Controller
        {
         return redirect()->back()->with('You are not authorized to access this post');
     }
-        $this->validate($request,[
+         $this->validate($request,[
             'title' => 'required',
-            'image' => 'image',
+            'image' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'description' => 'required',
             'categories' => 'required',
             'tags' => 'required',
             'body' => 'required',
+        ],
+        [
+            'title.require'  => 'Tiêu đề không được để trống',
+            'image.mimes'  => 'Vui lòng chọn đúng định dạng ảnh (jpg,png,jpeg,gif,svg)',
+            'image.image'  => 'File tải lên không phải định dạng ảnh',
+            'image.max'  => 'Dung lượng ảnh không được quá 2Mb'
         ]);
         $image = $request->file('image');
         $slug = Str::slug($request->title);

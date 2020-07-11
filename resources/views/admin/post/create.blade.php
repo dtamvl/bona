@@ -26,13 +26,13 @@
 					<div class="body">
 						<div class="form-group form-float">
 							<div class="form-line">
-								<input type="text" id="title" class="form-control" name="title">
+								<input type="text" id="title" class="form-control" name="title" required>
 								<label class="form-label">Post Title</label>
 							</div>
 						</div>
 						<div class="form-group form-float">
 							<div class="form-line">
-								<textarea  id="description" class="form-control" rows="10" name="description" style="resize:none;"></textarea>
+								<textarea  id="description" class="form-control" rows="10" name="description" style="resize:none;" required></textarea>
 								<label class="form-label">Post description</label>
 							</div>
 						</div>
@@ -51,9 +51,9 @@
 					</div>
 					<div class="body">
 						<div class="form-group form-float">
-							<div class="form-line {{ $errors->has('categories') ? 'focused error' : '' }}">
+							<!-- <div class="form-line {{ $errors->has('categories') ? 'focused error' : '' }}"> -->
 								<label for="category">Select Category</label>
-								<select name="categories[]" id="category" class="form-control show-tick" data-live-search="true"  multiple>
+								<select name="categories[]" id="category" class="form-control show-tick" data-live-search="true"  multiple required>
 									@foreach($categories as $category)
 									<option style="text-align: center" value="{{ $category->id }}">{{ $category->name }}</option>
 									@endforeach
@@ -62,22 +62,25 @@
 						</div>
 
 						<div class="form-group form-float">
-							<div class="form-line {{ $errors->has('tags') ? 'focused error' : '' }}">
+							<!-- <div class="form-line {{ $errors->has('tags') ? 'focused error' : '' }}"> -->
 								<label for="tag">Select Tags</label>
-								<select name="tags[]" id="tag" class="form-control show-tick" data-live-search="true" multiple>
+								<select name="tags[]" id="tag" class="form-control show-tick" data-live-search="true" multiple required>
 									@foreach($tags as $tag)
 									<option style="text-align: center" value="{{ $tag->id }}">{{ $tag->name }}</option>
 									@endforeach
 								</select>
 							</div>
 						</div>
-						<div class="form-group form-float">
+					
+						<div class="form-group form-float {{ $errors->first('image') ? 'has-error' : '' }}">
 							<div class="form-group">
 							<label for="image">Featured Image</label>
-							<!-- <img src="{{ pare_url_file($posts->image ?? '') }}" onerror="this.onerror=null;this.src='/images/no-image.jpg';" alt="" class="img-thumbnail" style="width: 200px;height: 200px;"> -->
 							<input type="file" name="image">
+							@if ($errors->first('image'))
+									<span class="text-danger">{{ $errors->first('image') }} </span>
+									@endif
 						</div>
-
+						
 						<div class="form-group">
 							<input type="checkbox" id="publish" class="filled-in" name="status" value="1">
 							<label for="publish">Publish</label>
@@ -99,7 +102,7 @@
 						</h2>
 					</div>
 					<div class="body">
-						<textarea id="content" name="body"></textarea>
+						<textarea id="content" name="body" required></textarea>
 						<a  class="btn btn-danger m-t-15 waves-effect" href="{{ route('admin.post.index') }}">BACK</a>
 						<button type="submit" class="btn btn-primary m-t-15 waves-effect">SUBMIT</button>
 						<!-- <textarea id="tinymce"></textarea> -->

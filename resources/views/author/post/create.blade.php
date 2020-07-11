@@ -71,10 +71,14 @@
 								</select>
 							</div>
 						</div>
+
 						<div class="form-group form-float">
-							<div class="form-group">
+							<div class="form-group form-float {{ $errors->first('image') ? 'has-error' : '' }}">
 								<label for="image">Featured Image</label>
 								<input type="file" name="image">
+								@if ($errors->first('image'))
+									<span class="text-danger">{{ $errors->first('image') }} </span>
+									@endif
 							</div>
 
 							<div class="form-group">
